@@ -10,7 +10,7 @@ function App() {
                                navigator.msGetUserMedia,
       videoSelect = null,
       touch = utils.captureTouch(document.getElementById("video-obj")),
-      stream = null;
+      localMediaStream = null;
 
   function gotSources(sourceInfos) {
     for (var i = 0; i !== sourceInfos.length; ++i) {
@@ -39,7 +39,7 @@ function App() {
   }
 
   function successCallback(stream) {
-    stream = stream;
+    localMediaStream = stream;
     video.src = vendorURL.createObjectURL(stream);
     video.play();
   }
@@ -49,15 +49,15 @@ function App() {
   }
 
   function start() {
-    if (stream) {
+    if (STREAM) {
       video.src = null;
-      window.stream.stop();
+      localMediaStream.stop();
     }
     var constraints = {};
     constraints.audio = false;
     if (videoSelect) {
       constraints.video = {
-        optional: [{ sourceId: videoSelect.value }]
+        optional: [{ sourceId: videoSelect.value }, { minWidth: 960 }]
       };
     } else {
       constraints.video = true;
@@ -81,4 +81,5 @@ function App() {
 window.addEventListener('DOMContentLoaded', function() {
   var app = new App();
   app.init();
+  //window.setInterval(function() {alert(video.videoHeight)}, 5000);
 }, false);
