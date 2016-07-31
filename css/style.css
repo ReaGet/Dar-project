@@ -1,0 +1,57 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html, body { height: 100%; }
+
+#container {
+  width: 100%;
+  height: 100%;
+  outline: 1px solid #aaa;
+  position: relative;
+  display: block;
+}
+
+#container #video-obj {
+  height: inherit;
+  width: inherit;
+  position: relative;
+}
+
+#container #videoSource {
+  position: absolute;
+  z-index: 100;
+  right: 0;
+  margin-right: 20px;
+  margin-top: 20px;
+  padding: 5px;
+}
+
+#container #video {
+  width: inherit;
+  height: inherit;
+  background: #080A0C; /* e1f7fc 151617 0B080C */
+  position: absolute;
+  float: left;
+}
+
+#container #canvas {
+  width: inherit;
+  height: inherit;
+  position: absolute;
+  float: left;
+}
+
+#container .btn {
+  width: 70px;
+  height: 70px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: 20px auto;
+  background: #85CEDE; /* 9DDE85 D2DE85 85CEDE DE8588 */
+  border-radius: 5px;
+  cursor: pointer;
+}
