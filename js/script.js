@@ -49,7 +49,7 @@ function App() {
   }
 
   function start() {
-    if (STREAM) {
+    if (localMediaStream) {
       video.src = null;
       localMediaStream.stop();
     }
