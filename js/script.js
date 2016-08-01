@@ -11,8 +11,7 @@ function App() {
       videoSelect = null,
       touch = utils.captureTouch(document.getElementById("app-obj")),
       mouse = utils.captureMouse(document.getElementById("app-obj")),
-      localMediaStream = null,
-      capturedImage = null;
+      localMediaStream = null;
 
   function gotSources(sourceInfos) {
     for (var i = 0; i !== sourceInfos.length; ++i) {
@@ -59,7 +58,13 @@ function App() {
     constraints.audio = false;
     if (videoSelect) {
       constraints.video = {
-        optional: [{ sourceId: videoSelect.value }, { minWidth: 960 }]
+        optional: [{ sourceId: videoSelect.value },
+                   {minWidth: 320},
+                   {minWidth: 640},
+                   {minWidth: 1024},
+                   {minWidth: 1280},
+                   {minWidth: 1920},
+                   {minWidth: 2560}]
       };
     } else {
       constraints.video = true;
@@ -68,17 +73,24 @@ function App() {
     navigator.getUserMedia(constraints, successCallback, errorCallback);
   }
 
-  function monitorMouse() {
-    if ((touch.target == "btn" || mouse.target == "btn") && !capturedImage) {
-      capturedImage = {
-        width: video.videoWidth
+  function snapShot() {
+    if (touch.target == "btn" || mouse.target == "btn") {
+      var iw, ih;
+      if (canvas.width < canvas.height) {
+        iw = canvas.width;
+        ih = 100;
+      } else {
+        iw = 200;
+        ih = canvas.height;
       }
-      ctx.drawImage(video, video.videoWidth, video.videoHeight, 0, 0);
+      ctx.drawImage(video, 0, 0, iw, ih);
       canvas.parentNode.style.display = "block";
+
+      mouse.touch = touch.target = null;
     }
-    if ((touch.target == "btn-back" || mouse.target == "btn-back") && capturedImage) {
-      capturedImage = null;
+    if (touch.target == "btn-back" || mouse.target == "btn-back") {
       canvas.parentNode.style.display = "none";
+      mouse.touch = touch.target = null;
     }
   }
 
@@ -93,7 +105,7 @@ function App() {
     start();
   };
 
-  window.setInterval(monitorMouse, 10);
+  window.setInterval(snapShot, 10);
 }
 
 window.addEventListener('DOMContentLoaded', function() {
