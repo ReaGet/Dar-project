@@ -9,8 +9,10 @@ function App() {
                                navigator.mozGetUserMedia ||
                                navigator.msGetUserMedia,
       videoSelect = null,
-      touch = utils.captureTouch(document.getElementById("video-obj")),
-      localMediaStream = null;
+      touch = utils.captureTouch(document.getElementById("app-obj")),
+      mouse = utils.captureMouse(document.getElementById("app-obj")),
+      localMediaStream = null,
+      capturedImage = null;
 
   function gotSources(sourceInfos) {
     for (var i = 0; i !== sourceInfos.length; ++i) {
@@ -66,6 +68,20 @@ function App() {
     navigator.getUserMedia(constraints, successCallback, errorCallback);
   }
 
+  function monitorMouse() {
+    if ((touch.target == "btn" || mouse.target == "btn") && !capturedImage) {
+      capturedImage = {
+        width: video.videoWidth
+      }
+      ctx.drawImage(video, video.videoWidth, video.videoHeight, 0, 0);
+      canvas.parentNode.style.display = "block";
+    }
+    if ((touch.target == "btn-back" || mouse.target == "btn-back") && capturedImage) {
+      capturedImage = null;
+      canvas.parentNode.style.display = "none";
+    }
+  }
+
   this.init = function() {
     if(!navigator.getUserMedia) {
       alert("Your browser doesn't support getUserMedia.\nTry Chrome or another modern browser.");
@@ -76,6 +92,8 @@ function App() {
       videoSelect.onchange = start;
     start();
   };
+
+  window.setInterval(monitorMouse, 10);
 }
 
 window.addEventListener('DOMContentLoaded', function() {

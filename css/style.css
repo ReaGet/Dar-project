@@ -13,7 +13,7 @@ html, body { height: 100%; }
   display: block;
 }
 
-#container #video-obj {
+#container #app-obj {
   height: inherit;
   width: inherit;
   position: relative;
@@ -36,14 +36,35 @@ html, body { height: 100%; }
   float: left;
 }
 
+#container #canvas-cont {
+  width: inherit;
+  height: inherit;
+  position: absolute;
+  display: none;
+  z-index: 3;
+}
+
+#container #canvas-cont #btn-back {
+  color: #fff;
+  position: absolute;
+  padding: 10px 15px;
+  z-index: 4;
+  cursor: pointer;
+  margin-left: 5px;
+  margin-top: 15px;
+  color: #4f5867;
+  font-family: sans-serif, Arial;
+}
+
 #container #canvas {
   width: inherit;
   height: inherit;
   position: absolute;
   float: left;
+  background: #c5e1e6;
 }
 
-#container .btn {
+#container #btn {
   width: 70px;
   height: 70px;
   position: absolute;
@@ -54,4 +75,5 @@ html, body { height: 100%; }
   background: #85CEDE; /* 9DDE85 D2DE85 85CEDE DE8588 */
   border-radius: 5px;
   cursor: pointer;
+  z-index: 2;
 }

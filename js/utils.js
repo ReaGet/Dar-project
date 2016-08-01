@@ -1,14 +1,16 @@
 var utils = {};
 
 utils.captureMouse = function (elem) {
-  var mouse = { x: 0, y: 0, clicked: false };
+  var mouse = { x: 0, y: 0, clicked: false, target: null };
 
   elem.addEventListener('mousedown', function(e) {
     mouse.clicked = true;
+    mouse.target = e.target.id;
   });
 
   elem.addEventListener('mouseup', function(e) {
     mouse.clicked = false;
+    mouse.target = null;
   });
 
   elem.addEventListener('mousemove', function(e) {
@@ -32,17 +34,19 @@ utils.captureMouse = function (elem) {
 };
 
 utils.captureTouch = function (elem) {
-  var touch = { x: null, y: null, isPressed: false };
+  var touch = { x: null, y: null, isPressed: false, target: null };
 
   elem.addEventListener('touchstart', function(e) {
     e.preventDefault();
     touch.isPressed = true;
+    touch.target = e.target.id;
   }, false);
 
   elem.addEventListener('touchend', function(e) {
     touch.isPressed = false;
     touch.x = null;
     touch.y = null;
+    touch.target = null;
   }, false);
 
   elem.addEventListener('touchmove', function(e) {
