@@ -31,7 +31,7 @@ html, body { height: 100%; }
 #container #video {
   width: inherit;
   height: inherit;
-  background: #fff; /* e1f7fc 151617 0B080C */
+  background: #080A0C; /* e1f7fc 151617 0B080C */
   position: absolute;
   float: left;
 }
@@ -56,9 +56,9 @@ html, body { height: 100%; }
   font-family: sans-serif, Arial;
 }
 
-#container #canvas {
+#container img {
   width: inherit;
-  height: inherit;
+  height: auto;
   position: absolute;
   float: left;
   background: #c5e1e6;

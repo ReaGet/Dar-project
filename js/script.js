@@ -1,7 +1,6 @@
 function App() {
   var container = document.getElementById('container'),
-      canvas = document.getElementById('canvas'),
-      ctx = canvas.getContext('2d'),
+      canvas = document.getElementById("canvas-cont"),
       video = document.getElementById('video'),
       vendorURL = window.URL || window.webkitURL;
       navigator.getUserMedia = navigator.getUserMedia ||
@@ -83,13 +82,13 @@ function App() {
         iw = 200;
         ih = canvas.height;
       }
-      ctx.drawImage(video, 0, 0, iw, ih);
-      canvas.parentNode.style.display = "block";
+
+      canvas.style.display = "block";
 
       mouse.touch = touch.target = null;
     }
     if (touch.target == "btn-back" || mouse.target == "btn-back") {
-      canvas.parentNode.style.display = "none";
+      canvas.style.display = "none";
       mouse.touch = touch.target = null;
     }
   }
