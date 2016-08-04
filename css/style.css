@@ -31,7 +31,7 @@ html, body { height: 100%; }
 #container #video {
   width: inherit;
   height: inherit;
-  background: #080A0C; /* e1f7fc 151617 0B080C */
+  background: #fff; /* e1f7fc 151617 0B080C */
   position: absolute;
   float: left;
 }
