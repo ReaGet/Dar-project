@@ -11,7 +11,8 @@ function App() {
       videoSelect = null,
       touch = utils.captureTouch(document.getElementById("app-obj")),
       mouse = utils.captureMouse(document.getElementById("app-obj")),
-      localMediaStream = null;
+      localMediaStream = null,
+      capturedImage = null;
 
   function gotSources(sourceInfos) {
     for (var i = 0; i !== sourceInfos.length; ++i) {
@@ -58,13 +59,7 @@ function App() {
     constraints.audio = false;
     if (videoSelect) {
       constraints.video = {
-        optional: [{ sourceId: videoSelect.value },
-                   {minWidth: 320},
-                   {minWidth: 640},
-                   {minWidth: 1024},
-                   {minWidth: 1280},
-                   {minWidth: 1920},
-                   {minWidth: 2560}]
+        optional: [{ sourceId: videoSelect.value }, { minWidth: 960 }]
       };
     } else {
       constraints.video = true;
@@ -75,23 +70,28 @@ function App() {
 
   function snapShot() {
     if (touch.target == "btn" || mouse.target == "btn") {
-      var iw, ih;
-      if (canvas.width < canvas.height) {
-        iw = canvas.width;
-        ih = 100;
-      } else {
-        iw = 200;
+      var iw, ih, scale;
+      if (canvas.width > canvas.height) {
+        scale = canvas.height / video.videoHeight;
         ih = canvas.height;
+        iw = video.videoWidth * scale;
+      } else {
+        scale = canvas.width / video.videoWidth;
+        ih = video.videoHeight * scale;
+        iw = canvas.width;
       }
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
       ctx.drawImage(video, 0, 0, iw, ih);
       canvas.parentNode.style.display = "block";
-
-      mouse.touch = touch.target = null;
     }
     if (touch.target == "btn-back" || mouse.target == "btn-back") {
       canvas.parentNode.style.display = "none";
-      mouse.touch = touch.target = null;
     }
+  }
+
+  function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
   }
 
   this.init = function() {
@@ -103,6 +103,8 @@ function App() {
     if (videoSelect)
       videoSelect.onchange = start;
     start();
+    window.onchange = resizeCanvas;
+    resizeCanvas();
   };
 
   window.setInterval(snapShot, 10);
@@ -111,5 +113,6 @@ function App() {
 window.addEventListener('DOMContentLoaded', function() {
   var app = new App();
   app.init();
-  //window.setInterval(function() {alert(video.videoHeight)}, 5000);
+  //window.setInterval(function() {alert(video.videoWidth + " " +  video.videoHeight)}, 5000);
+  //window.setInterval(function() {alert(canvas.width + " " + canvas.height)}, 5000);
 }, false);
